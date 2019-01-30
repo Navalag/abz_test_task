@@ -89,4 +89,10 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	var levelOne = "{{ $levelOne }}";
+	console.log(levelOne);
+	var levelTwo = "{{ $levelTwo }}";
+	var levelThree = "{{ $levelThree }}";
+</script>
 @endsection

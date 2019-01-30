@@ -25,7 +25,7 @@ var Log = {
   }
 };
 
-
+console.log(levelOne);
 function init(){
     //init data
     var json = {
