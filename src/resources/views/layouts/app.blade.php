@@ -10,7 +10,7 @@
 	<title>{{ config('app.name', 'Laravel') }}</title>
 
 	<!-- Scripts -->
-	<script src="{{ asset('js/app.js') }}" defer></script>
+	<!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
 
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,10 +19,14 @@
 	<!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-	<link type="text/css" href="{{ asset('vendor/org_chart/css/base.css') }}" rel="stylesheet">
-	<link type="text/css" href="{{ asset('vendor/org_chart/css/Spacetree.css') }}" rel="stylesheet">
+
+	<!-- Org chat styles -->
+	<link rel="stylesheet" href="{{ asset('vendor/org_chart/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/org_chart/css/jquery.orgchart.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/org_chart/css/style.css') }}">
+
 </head>
-<body onload="init();">
+<body>
 	<div id="app">
 		<nav class="navbar navbar-expand-md navbar-light navbar-laravel">
 			<div class="container">
@@ -80,12 +84,15 @@
 		</main>
 	</div>
 </body>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script> -->
 	<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>-->
 	
-	<!-- JIT Library File -->
-	<script language="javascript" type="text/javascript" src="{{ asset('vendor/org_chart/jit.js') }}"></script>
+	<!--  OrgChart JS -->
+	<script type="text/javascript" src="{{ asset('vendor/org_chart/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('vendor/org_chart/jquery.orgchart.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('vendor/org_chart/jquery.mockjax.min.js') }}"></script>
+
 	<!-- Main Chart File -->
-	<script language="javascript" type="text/javascript" src="{{ asset('js/org_chart.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/org_chart.js') }}"></script>
 </html>

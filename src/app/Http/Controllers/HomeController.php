@@ -41,7 +41,7 @@ class HomeController extends Controller
             // $jsonLevelOneValue['position'] = $value->position;
             // $jsonLevelOne[] = $jsonLevelOneValue;
         }
-        dd(json_encode($jsonLevelOne));
+        // dd(json_encode($jsonLevelOne));
 
         $jsonLevelTwo = [];
         $jsonLevelTwoValue = [];
