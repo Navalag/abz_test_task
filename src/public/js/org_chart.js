@@ -62,16 +62,16 @@ $(function() {
 	// 	]}
 	// });
 
-	var datascource = {
-		'id': 'n1',
-		'name': 'Su Miao',
-		'title': 'department manager',
-		'relationship': '111',
-		'children': [
-			{ 'id': 'n2','name': 'Tie Hua', 'title': 'senior engineer', 'relationship': '111' },
-			{ 'id': 'n3','name': 'Hei Hei', 'title': 'senior engineer', 'relationship': '111' }
-		]
-	};
+	// var datascource = {
+	// 	'id': 'n1',
+	// 	'name': 'Su Miao',
+	// 	'title': 'department manager',
+	// 	'relationship': '111',
+	// 	'children': [
+	// 		{ 'id': 'n2','name': 'Tie Hua', 'title': 'senior engineer', 'relationship': '111' },
+	// 		{ 'id': 'n3','name': 'Hei Hei', 'title': 'senior engineer', 'relationship': '111' }
+	// 	]
+	// };
 
 	// var ajaxURLs = {
 	// 	'children': function(nodeData) {
@@ -86,8 +86,18 @@ $(function() {
 	// 	}
 	// };
 
+// console.log(employees);
+	var datascource = {
+		'name': 'Su Miao',
+		'title': 'department manager',
+		'children': [
+			{ 'id': 'n2','name': 'Tie Hua', 'title': 'senior engineer', 'relationship': '111' },
+			{ 'id': 'n3','name': 'Hei Hei', 'title': 'senior engineer', 'relationship': '111' }
+		]
+	};
+
 	$('#chart-container').orgchart({
-		'data': datascource,
+		'data': employees,
 		// 'ajaxURL': ajaxURLs,
 		'nodeContent': 'title'
 		// 'nodeId': 'id'

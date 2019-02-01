@@ -3,17 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\NodeTrait;
 
 class Employee extends Model
 {
-    public $fillable = ['fio','position','salary'];
-
-    /**
-     * Get the index name for the model.
-     *
-     * @return string
-    */
-    public function childs() {
-        return $this->hasMany('App\Employee','boss_id','id');
-    }
+	use NodeTrait;
+	
+	public $fillable = ['fio','position','salary','boss_id'];
 }

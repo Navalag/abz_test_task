@@ -4,10 +4,8 @@
 
 	<div id="chart-container"></div>
 	<script>
-    var levelOne = {!! $levelOne !!};
-    var levelTwo = {!! $levelTwo !!};
-    var levelThree = {!! $levelThree !!};
-    // console.log(levelThree);
+    var employees = {!! $employees !!};
+    employees = employees[0];
 	</script>
 
 @endsection

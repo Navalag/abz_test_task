@@ -19,7 +19,8 @@ class CreateEmployeesTable extends Migration
             $table->string('position');
             $table->timestamp('employment_date');
             $table->integer('salary');
-            $table->integer('boss_id');
+            // $table->integer('boss_id');
+            $table->nestedSet();
             $table->timestamps();
         });
     }
