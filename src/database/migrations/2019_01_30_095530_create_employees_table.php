@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Kalnoy\Nestedset\NestedSet;
 
 class CreateEmployeesTable extends Migration
 {
@@ -20,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->timestamp('employment_date');
             $table->integer('salary');
             // $table->integer('boss_id');
-            $table->nestedSet();
+            NestedSet::columns($table);
             $table->timestamps();
         });
     }

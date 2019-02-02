@@ -9,5 +9,5 @@ class Employee extends Model
 {
 	use NodeTrait;
 	
-	public $fillable = ['fio','position','salary','boss_id'];
+	public $fillable = ['fio','position','salary'];
 }
