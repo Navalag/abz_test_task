@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Kalnoy\Nestedset\NestedSet;
 
-class CreateEmployeesTable extends Migration
+class CreateStaffTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -14,13 +13,16 @@ class CreateEmployeesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('employees', function (Blueprint $table) {
+		Schema::create('staff', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('fio');
 			$table->string('position');
 			$table->timestamp('employment_date');
 			$table->integer('salary');
-			NestedSet::columns($table);
+			$table->integer('parent_id')->nullable();
+			$table->integer('lft')->nullable();
+			$table->integer('rgt')->nullable();
+			$table->integer('depth')->nullable();
 			$table->timestamps();
 		});
 	}
@@ -32,6 +34,6 @@ class CreateEmployeesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('employees');
+		Schema::dropIfExists('staff');
 	}
 }
