@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employee;
+use App\Staff;
 
 class OrgChartController extends Controller
 {
@@ -25,6 +26,17 @@ class OrgChartController extends Controller
 
 	public function index()
 	{
+		// $node = new Staff;
+		$node = Staff::where('id', '=', 18)->first();
+		// $node->descendants()->limitDepth(2)->get();
+		foreach($node->descendants()->limitDepth(2)->get() as $descendant) {
+		  echo "{$descendant->id}";
+		  echo "\n";
+		}
+		die();
+		dd($node);
+
+
 		// $employee = new Employee;
 		// $result = Employee::withDepth()->find('8');
 		// dd($result->depth);
