@@ -12,61 +12,37 @@ class StaffTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		$faker = Faker\Factory::create();
-
-		$staff = [[
-			'fio' => 'Lao Lao',
-			'position' => 'general manager',
-			'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
-			'salary' => 5000,
-			'children' => []
-		]];
-		for ($j=0; $j < 10; $j++) { 
-			array_push($staff[0]['children'], [
-				'fio' => 'Lao',
-				'position' => 'general',
-				'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
-				'salary' => 5000,
-				'children' => []
-			]);
-			for ($i=0; $i < 10; $i++) { 
-				array_push($staff[0]['children'][$j]['children'], [
-					'fio' => 'Lao Lao',
-					'position' => 'general manager',
-					'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
-					'salary' => 5000,
-					'children' => []
-				]);
-				for ($a=0; $a < 10; $a++) { 
-					array_push($staff[0]['children'][$j]['children'][$i]['children'], [
-						'fio' => 'Lao Lao',
-						'position' => 'general manager',
-						'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
-						'salary' => 5000,
-						'children' => []
-					]);
-					for ($b=0; $b < 10; $b++) { 
-						array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'], [
-							'fio' => 'Lao Lao',
-							'position' => 'general manager',
-							'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
-							'salary' => 5000,
-							'children' => []
-						]);
-						for ($c=0; $c < 5; $c++) { 
-							array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'][$b]['children'], [
-								'fio' => 'Lao Lao',
-								'position' => 'general manager',
-								'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
-								'salary' => 5000
-							]);
+		$staff = [];
+		array_push($staff, $this->getDummyInfo());
+		for ($j=0; $j < 2; $j++) { 
+			array_push($staff[0]['children'], $this->getDummyInfo());
+			for ($i=0; $i < 2; $i++) { 
+				array_push($staff[0]['children'][$j]['children'], $this->getDummyInfo());
+				for ($a=0; $a < 2; $a++) { 
+					array_push($staff[0]['children'][$j]['children'][$i]['children'], $this->getDummyInfo());
+					for ($b=0; $b < 2; $b++) { 
+						array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'], $this->getDummyInfo());
+						for ($c=0; $c < 2; $c++) { 
+							array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'][$b]['children'], $this->getDummyInfo());
 						}
 					}
 				}
 			}
 		}
-		// dd($staff);
-		// $root = Staff::create($staff);
+
 		Staff::buildTree($staff); // => true
+	}
+
+	private function getDummyInfo()
+	{
+		$faker = Faker\Factory::create();
+
+		return [
+			'fio' => $faker->name,
+			'position' => $faker->jobTitle,
+			'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
+			'salary' => random_int(1000, 5000),
+			'children' => []
+		];
 	}
 }
