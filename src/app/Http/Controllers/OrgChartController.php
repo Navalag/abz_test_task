@@ -11,11 +11,8 @@ class OrgChartController extends Controller
 	public function index()
 	{
 		$node = Staff::root();
-		// $node = Staff::where('id', '=', 1)->first();
-		// $node->descendants()->limitDepth(2)->get();
 		$jsonEmployees = [];
-		foreach($node->getDescendantsAndSelf(1) as $value) {
-		// foreach($node->descendantsAndSelf()->limitDepth(2)->get() as $value) {
+		foreach($node->descendantsAndSelf()->limitDepth(2)->get() as $value) {
 			$jsonEmployees[] = [
 				'id' => $value->id,
 				'name' => $value->fio,
@@ -25,7 +22,6 @@ class OrgChartController extends Controller
 			];
 		}
 		$tree = $this->buildTree($jsonEmployees);
-		// dd($tree);
 
 		return view('welcome')->with('employees', json_encode($tree));
 	}
@@ -35,7 +31,7 @@ class OrgChartController extends Controller
 		$node = Staff::where('id', '=', $nodeId)->first();
 		$jsonEmployees = [];
 
-		foreach($node->getDescendantsAndSelf() as $value) {
+		foreach($node->descendantsAndSelf()->limitDepth(1)->get() as $value) {
 			$jsonEmployees[] = [
 				'id' => $value->id,
 				'name' => $value->fio,
@@ -45,10 +41,8 @@ class OrgChartController extends Controller
 			];
 		}
 		$tree = $this->buildTree($jsonEmployees, $node->parent_id);
-		$retVal = ['children' => $tree[0]['children']];
-		// dd($retVal);
 
-		return response()->json($retVal);
+		return response()->json(['children' => $tree[0]['children']]);
 	}
 
 	private function buildTree(array $elements, $parentId = 0)

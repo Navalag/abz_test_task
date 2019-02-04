@@ -73,13 +73,6 @@ $(function() {
 	// 	]
 	// };
 
-	// function postChildren($url) {
-	// 	$.getJSON($url, function(data) {
-	// 		console.log(data);
-	// 		return data;
-	// 	});
-	// }
-
 	var ajaxURLs = {
 		'children': function(nodeData) {
 			return '/orgchart/children/' + nodeData.id;
