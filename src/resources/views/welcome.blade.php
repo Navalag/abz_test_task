@@ -4,8 +4,8 @@
 
 	<div id="chart-container"></div>
 	<script>
-    var employees = {!! $employees !!};
-    employees = employees[0];
+		var employees = {!! $employees !!};
+		employees = employees[0];
 	</script>
 
 @endsection

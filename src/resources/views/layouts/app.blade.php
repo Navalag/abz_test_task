@@ -91,7 +91,7 @@
 	<!--  OrgChart JS -->
 	<script type="text/javascript" src="{{ asset('vendor/org_chart/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('vendor/org_chart/jquery.orgchart.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('vendor/org_chart/jquery.mockjax.min.js') }}"></script>
+  <!-- <script type="text/javascript" src="{{ asset('vendor/org_chart/jquery.mockjax.min.js') }}"></script> -->
 
 	<!-- Main Chart File -->
 	<script type="text/javascript" src="{{ asset('js/org_chart.js') }}"></script>

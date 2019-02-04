@@ -8,7 +8,51 @@ use App\Staff;
 
 class OrgChartController extends Controller
 {
-	private function buildTree(array $elements, $parentId = 0) {
+	public function index()
+	{
+		$node = Staff::root();
+		// $node = Staff::where('id', '=', 1)->first();
+		// $node->descendants()->limitDepth(2)->get();
+		$jsonEmployees = [];
+		foreach($node->getDescendantsAndSelf(1) as $value) {
+		// foreach($node->descendantsAndSelf()->limitDepth(2)->get() as $value) {
+			$jsonEmployees[] = [
+				'id' => $value->id,
+				'name' => $value->fio,
+				'title' => $value->position,
+				'parent_id' => $value->parent_id,
+				'relationship' => $this->getNodeRelationship($value)
+			];
+		}
+		$tree = $this->buildTree($jsonEmployees);
+		// dd($tree);
+
+		return view('welcome')->with('employees', json_encode($tree));
+	}
+
+	public function orgChartGetJSON($relation, $nodeId)
+	{
+		$node = Staff::where('id', '=', $nodeId)->first();
+		$jsonEmployees = [];
+
+		foreach($node->getDescendantsAndSelf() as $value) {
+			$jsonEmployees[] = [
+				'id' => $value->id,
+				'name' => $value->fio,
+				'title' => $value->position,
+				'parent_id' => $value->parent_id,
+				'relationship' => $this->getNodeRelationship($value)
+			];
+		}
+		$tree = $this->buildTree($jsonEmployees, $node->parent_id);
+		$retVal = ['children' => $tree[0]['children']];
+		// dd($retVal);
+
+		return response()->json($retVal);
+	}
+
+	private function buildTree(array $elements, $parentId = 0)
+	{
 		$branch = array();
 
 		foreach ($elements as $element) {
@@ -24,22 +68,21 @@ class OrgChartController extends Controller
 		return $branch;
 	}
 
-	public function index()
+	private function getNodeRelationship($node)
 	{
-		$node = Staff::where('id', '=', 1)->first();
-		// $node->descendants()->limitDepth(2)->get();
-		$jsonEmployees = [];
-		foreach($node->getDescendantsAndSelf() as $value) {
-			$jsonEmployees[] = [
-				'id' => $value->id,
-				'name' => $value->fio,
-				'title' => $value->position,
-				'parent_id' => $value->parent_id,
-			];
-		}
-		$tree = $this->buildTree($jsonEmployees);
-		// dd($tree);
+		$relationship = '';
 
-		return view('welcome')->with('employees', json_encode($tree));
+		if ($node->isRoot()) {
+			$relationship .= '00';
+		} else {
+			$relationship .= '11';
+		}
+		if ($node->isLeaf()) {
+			$relationship .= '0';
+		} else {
+			$relationship .= '1';
+		}
+
+		return $relationship;
 	}
 }
