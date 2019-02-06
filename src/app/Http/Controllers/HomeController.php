@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Staff;
+use \Carbon\Carbon;
+use \Datatables;
 
 class HomeController extends Controller
 {
@@ -18,24 +20,22 @@ class HomeController extends Controller
 	}
 
 	/**
-	 * Show the application dashboard.
+	 * Display a listing of the resource.
 	 *
-	 * @return \Illuminate\Contracts\Support\Renderable
+	 * @return \Illuminate\Http\Response
 	 */
 	public function index()
 	{
-		$staff = Staff::all();
-		$jsonStaffTable = [];
+		return view('home');
+	}
 
-		foreach ($staff as $value) {
-			$jsonStaffTable[] = [
-				'id' => $value->id,
-				'fio' => $value->fio,
-				'position' => $value->position,
-				'salary' => $value->salary
-			];
-		}
-
-		return view('home')->with('data', json_encode($jsonStaffTable));
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		return Datatables::of(Staff::query())->make(true);
 	}
 }
