@@ -40,28 +40,32 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="post" action="{{ route('edit.row') }}"  id="formEditRow">
+        	@csrf
+
+					<div id="alertNotification"></div>
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Name">
+            <input type="text" name="name" class="form-control" id="name" placeholder="Name">
           </div>
           <div class="form-group">
             <label for="position">Position</label>
-            <input type="text" class="form-control" id="position" placeholder="Position">
+            <input type="text" name="position" class="form-control" id="position" placeholder="Position">
           </div>
           <div class="form-group">
             <label for="sart_date">Start Date</label>
-            <input type="text" class="form-control" id="sart_date">
+            <input type="text" name="sart_date" class="form-control" id="sart_date">
           </div>
           <div class="form-group">
             <label for="salary">Salary</label>
-            <input type="number" step="1" class="form-control" id="salary" placeholder="Salary">
+            <input type="number" name="salary" step="1" class="form-control" id="salary" placeholder="Salary">
           </div>
           <div class="form-group">
             <label for="manger_id">Manager Id</label>
-            <input type="number" step="1" class="form-control" id="manger_id" placeholder="Manager Id">
+            <input type="number" name="manger_id" step="1" class="form-control" id="manger_id" placeholder="Manager Id">
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <input type="hidden" id="person_id" name="id">
+          <button type="submit" id="editRow" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
@@ -98,6 +102,7 @@
 				$('#sart_date').val(data.employment_date);
 				$('#salary').val(data.salary);
 				$('#manger_id').val(data.parent_id);
+				$('#person_id').val(data.id);
 			});
 
 			$('#example tbody').on( 'click', 'tr', function () {
@@ -126,6 +131,35 @@
 
 			$('#remove').click( function () {
 				table.row('.table-primary').remove().draw( false );
+			});
+
+			$('#editRow').click( function(e) {
+				e.preventDefault();
+
+				$.post('/edit', $('#formEditRow').serialize(), function(data) {
+						console.log(data);
+						if (data.success) {
+							$('tr.table-primary td:eq(1)').html(data.person_info.fio);
+							$('tr.table-primary td:eq(2)').html(data.person_info.position);
+							$('tr.table-primary td:eq(3)').html(data.person_info.employment_date);
+							$('tr.table-primary td:eq(4)').html(data.person_info.salary);
+
+							$("#alertNotification").html('<div class="alert alert-info">'+data.success+'</div>');
+							window.setTimeout(function () {
+								$(".alert").fadeTo(500, 0).slideUp(500, function () {
+								  $(this).remove();
+								});
+							}, 2000);
+						}
+						else {
+							var msg = '';
+							console.log(data.errors);
+							$.each(data.errors[0], function(index, item) {
+							  msg += '<p class="mr-auto overflow-ellipsis no-padding" id="alerText">'+item+'</p>'
+							});
+							$("#alertNotification").html('<div class="alert alert-danger m-t-15">'+msg+'</div>');
+						}
+				});
 			});
 
 		});

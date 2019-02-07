@@ -15,6 +15,8 @@ Auth::routes();
 
 Route::get('/', 'OrgChartController@index')->name('orgChart');
 Route::get('/orgchart/{relation}/{nodeId}', 'OrgChartController@orgChartGetJSON')->name('postOrgChart');
-Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/create', 'HomeController@create')->name('create');
+
+Route::post('/edit', 'HomeController@editRow')->name('edit.row');

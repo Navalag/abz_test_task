@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Staff;
 use \Carbon\Carbon;
 use \Datatables;
+use Validator;
 
 class HomeController extends Controller
 {
@@ -37,5 +38,36 @@ class HomeController extends Controller
 	public function create()
 	{
 		return Datatables::of(Staff::query())->make(true);
+	}
+
+	public function editRow(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'id'=> ['required', 'string', 'min:1', 'max:11'],
+			'name'=> ['required', 'string', 'max:255'],
+			'position'=> ['required', 'string', 'max:255'],
+			'sart_date' => ['required', 'string', 'max:255'],
+			'salary' => ['required', 'string', 'min:1', 'max:11'],
+			'manger_id' => ['string', 'nullable', 'min:1', 'max:11'],
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'errors' => [$validator->errors()->all()],
+			]);
+		}
+
+		$employee = Staff::find($request->get('id'));
+		$employee->fio = $request->get('name');
+		$employee->position = $request->get('position');
+		$employee->employment_date = $request->get('sart_date');
+		$employee->salary = $request->get('salary');
+		// $employee->parent_id = $request->get('manger_id');
+		$employee->save();
+		return response()->json([
+			'success' => 'The row was successfully updated!',
+			'person_info' => $employee
+		]);
+		dd($request->all());
 	}
 }
