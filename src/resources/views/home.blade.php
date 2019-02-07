@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
 	<button type="button" id="add" class="btn btn-outline-success btn-sm mb-3">Add</button>
-	<button type="button" id="edit" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#exampleModalCenter" disabled>Edit</button>
-	<button type="button" id="remove" class="btn btn-outline-danger btn-sm mb-3">Delete</button>
+	<button type="button" id="edit" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modalEdit" disabled>Edit</button>
+	<button type="button" id="remove" class="btn btn-outline-danger btn-sm mb-3" data-toggle="modal" data-target="#modalDelete" disabled>Delete</button>
 	<table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
 		<thead>
 			<tr>
@@ -30,7 +30,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -67,6 +67,20 @@
           <input type="hidden" id="person_id" name="id">
           <button type="submit" id="editRow" class="btn btn-primary">Submit</button>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Small modal -->
+<div class="modal fade bd-example-modal-sm" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<div id="alertNotificationDelete"></div>
+      	<p>Are you sure you want to delete this row?</p>
+      	<button type="button" id="deleteRow" class="btn btn-danger btn-block">Yes</button>
+      	<button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
@@ -109,11 +123,15 @@
 				if ( $(this).hasClass('table-primary') ) {
 					$(this).removeClass('table-primary');
 					$('#edit').attr("disabled", true);
+					$('#remove').attr("disabled", true);
+					$('#add').attr("disabled", false);
 				}
 				else {
 					table.$('tr.table-primary').removeClass('table-primary');
 					$(this).addClass('table-primary');
 					$('#edit').attr("disabled", false);
+					$('#remove').attr("disabled", false);
+					$('#add').attr("disabled", true);
 				}
 			});
 
@@ -129,8 +147,38 @@
    //      ]).draw( false );
  	 //    });
 
-			$('#remove').click( function () {
-				table.row('.table-primary').remove().draw( false );
+			$('#deleteRow').click( function () {
+				var person_info = table.row('.table-primary').data();
+				var token =  $('input[name="_token"]');
+				var data = {
+					'person_id': person_info.id,
+					'_token': token.attr('value')
+				}
+
+				$.post('/delete', data, function(response) {
+					console.log(response);
+					if (response.success) {
+						$("#alertNotificationDelete").html('<div class="alert alert-info">'+response.success+'</div>');
+						window.setTimeout(function () {
+							$(".alert").fadeTo(500, 0).slideUp(500, function () {
+							  $(this).remove();
+							});
+							$('#modalDelete').modal('toggle');
+						}, 2000);
+						$('.table-primary').remove();
+						$('#edit').attr("disabled", true);
+						$('#remove').attr("disabled", true);
+					}
+					else {
+						var msg = '';
+						console.log(data.errors);
+						$.each(data.errors[0], function(index, item) {
+						  msg += '<p class="mr-auto overflow-ellipsis no-padding" id="alerText">'+item+'</p>'
+						});
+						$("#alertNotificationDelete").html('<div class="alert alert-danger m-t-15">'+msg+'</div>');
+					}
+				});
+				
 			});
 
 			$('#editRow').click( function(e) {
@@ -143,7 +191,6 @@
 							$('tr.table-primary td:eq(2)').html(data.person_info.position);
 							$('tr.table-primary td:eq(3)').html(data.person_info.employment_date);
 							$('tr.table-primary td:eq(4)').html(data.person_info.salary);
-
 							$("#alertNotification").html('<div class="alert alert-info">'+data.success+'</div>');
 							window.setTimeout(function () {
 								$(".alert").fadeTo(500, 0).slideUp(500, function () {
@@ -160,6 +207,7 @@
 							$("#alertNotification").html('<div class="alert alert-danger m-t-15">'+msg+'</div>');
 						}
 				});
+
 			});
 
 		});

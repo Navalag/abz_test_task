@@ -56,7 +56,6 @@ class HomeController extends Controller
 				'errors' => [$validator->errors()->all()],
 			]);
 		}
-
 		$employee = Staff::find($request->get('id'));
 		$employee->fio = $request->get('name');
 		$employee->position = $request->get('position');
@@ -64,10 +63,30 @@ class HomeController extends Controller
 		$employee->salary = $request->get('salary');
 		// $employee->parent_id = $request->get('manger_id');
 		$employee->save();
+
 		return response()->json([
 			'success' => 'The row was successfully updated!',
 			'person_info' => $employee
 		]);
-		dd($request->all());
+	}
+
+	public function deleteRow(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'person_id'=> ['required', 'numeric', 'min:1'],
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'errors' => [$validator->errors()->all()],
+			]);
+		}
+		$employee = Staff::find($request->get('person_id'));
+		$employee->delete();
+
+		return response()->json([
+			'success' => 'The row was successfully deleted!',
+			'person_info' => $employee
+		]);
 	}
 }

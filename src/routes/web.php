@@ -20,3 +20,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/create', 'HomeController@create')->name('create');
 
 Route::post('/edit', 'HomeController@editRow')->name('edit.row');
+Route::post('/delete', 'HomeController@deleteRow')->name('delete.row');
