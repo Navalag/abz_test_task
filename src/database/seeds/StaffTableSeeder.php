@@ -12,35 +12,28 @@ class StaffTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		// $staff = [];
-		// array_push($staff, $this->getDummyInfo());
-		// for ($j=0; $j < 5; $j++) { 
-		// 	array_push($staff[0]['children'], $this->getDummyInfo());
-		// 	for ($i=0; $i < 5; $i++) { 
-		// 		array_push($staff[0]['children'][$j]['children'], $this->getDummyInfo());
-		// 		for ($a=0; $a < 5; $a++) { 
-		// 			array_push($staff[0]['children'][$j]['children'][$i]['children'], $this->getDummyInfo());
-		// 			for ($b=0; $b < 5; $b++) { 
-		// 				array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'], $this->getDummyInfo());
-		// 				for ($c=0; $c < 8; $c++) { 
-		// 					array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'][$b]['children'], $this->getDummyInfo());
-		// 					for ($d=0; $d < 10; $d++) { 
-		// 						array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'][$b]['children'][$c]['children'], $this->getDummyInfo());
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-		// Staff::buildTree($staff); // => true
-
-		$staff = Staff::all();
-		foreach ($staff as $value) {
-			$value->manager_name = $this->findManagerName($staff, $value->parent_id);
-			// var_dump($value->manager_name);
+		$staff = [];
+		array_push($staff, $this->getDummyInfo());
+		for ($j=0; $j < 5; $j++) { 
+			array_push($staff[0]['children'], $this->getDummyInfo());
+			for ($i=0; $i < 5; $i++) { 
+				array_push($staff[0]['children'][$j]['children'], $this->getDummyInfo());
+				for ($a=0; $a < 5; $a++) { 
+					array_push($staff[0]['children'][$j]['children'][$i]['children'], $this->getDummyInfo());
+					for ($b=0; $b < 5; $b++) { 
+						array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'], $this->getDummyInfo());
+						for ($c=0; $c < 8; $c++) { 
+							array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'][$b]['children'], $this->getDummyInfo());
+							for ($d=0; $d < 10; $d++) { 
+								array_push($staff[0]['children'][$j]['children'][$i]['children'][$a]['children'][$b]['children'][$c]['children'], $this->getDummyInfo());
+							}
+						}
+					}
+				}
+			}
 		}
-		$staff->save();
+
+		Staff::buildTree($staff); // => true
 	}
 
 	private function findManagerName($staff, $parent_id)

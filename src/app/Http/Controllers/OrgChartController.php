@@ -12,6 +12,7 @@ class OrgChartController extends Controller
 	{
 		$node = Staff::root();
 		$jsonEmployees = [];
+
 		foreach($node->descendantsAndSelf()->limitDepth(2)->get() as $value) {
 			$jsonEmployees[] = [
 				'id' => $value->id,

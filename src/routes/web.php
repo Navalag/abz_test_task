@@ -18,4 +18,3 @@ Route::get('/orgchart/{relation}/{nodeId}', 'OrgChartController@orgChartGetJSON'
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/create', 'HomeController@create')->name('create');
-// Route::get('/index', 'HomeController@index');

@@ -31,11 +31,7 @@
 @endsection
 
 @push('scripts')
-  <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
-  <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
-  <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-
-  <!-- <script type="text/javascript" src="{{ asset('js/staff_table.js') }}"></script> -->
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/datatables.min.js"></script>
 
   <script>
   	$(document).ready(function() {
