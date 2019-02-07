@@ -40,15 +40,46 @@ class HomeController extends Controller
 		return Datatables::of(Staff::query())->make(true);
 	}
 
+	public function createRow(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'name'=> ['required', 'string', 'max:255'],
+			'position'=> ['required', 'string', 'max:255'],
+			'start_date' => ['required', 'string', 'max:255'],
+			'salary' => ['required', 'string', 'min:1', 'max:11'],
+			'manger_id' => ['numeric', 'nullable', 'min:1'],
+		]);
+
+		if ($validator->fails()) {
+			return response()->json([
+				'errors' => [$validator->errors()->all()],
+			]);
+		}
+		$node = Staff::create([
+			'fio' => $request->get('name'),
+			'position' => $request->get('position'),
+			'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
+			'manager_name' => 'test',
+			'salary' => $request->get('salary')
+		]);
+		$parent_node = Staff::where('id', '=', $request->get('manger_id'))->first();
+		$node->makeChildOf($parent_node);
+
+		return response()->json([
+			'success' => 'The row was successfully updated!',
+			'person_info' => $node
+		]);
+	}
+
 	public function editRow(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
-			'id'=> ['required', 'string', 'min:1', 'max:11'],
+			'id'=> ['required', 'numeric', 'min:1', 'max:11'],
 			'name'=> ['required', 'string', 'max:255'],
 			'position'=> ['required', 'string', 'max:255'],
-			'sart_date' => ['required', 'string', 'max:255'],
+			'start_date' => ['required', 'string', 'max:255'],
 			'salary' => ['required', 'string', 'min:1', 'max:11'],
-			'manger_id' => ['string', 'nullable', 'min:1', 'max:11'],
+			'manger_id' => ['numeric', 'nullable', 'min:1'],
 		]);
 
 		if ($validator->fails()) {
@@ -59,7 +90,7 @@ class HomeController extends Controller
 		$employee = Staff::find($request->get('id'));
 		$employee->fio = $request->get('name');
 		$employee->position = $request->get('position');
-		$employee->employment_date = $request->get('sart_date');
+		$employee->employment_date = $request->get('start_date');
 		$employee->salary = $request->get('salary');
 		// $employee->parent_id = $request->get('manger_id');
 		$employee->save();

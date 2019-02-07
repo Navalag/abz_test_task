@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-	<button type="button" id="add" class="btn btn-outline-success btn-sm mb-3">Add</button>
+	<button type="button" id="add" class="btn btn-outline-success btn-sm mb-3" data-toggle="modal" data-target="#modalCreate">Add</button>
 	<button type="button" id="edit" class="btn btn-outline-secondary btn-sm mb-3" data-toggle="modal" data-target="#modalEdit" disabled>Edit</button>
 	<button type="button" id="remove" class="btn btn-outline-danger btn-sm mb-3" data-toggle="modal" data-target="#modalDelete" disabled>Delete</button>
 	<table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
@@ -29,7 +29,7 @@
 	</table>
 </div>
 
-<!-- Modal -->
+<!-- Edit Modal -->
 <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -53,8 +53,8 @@
             <input type="text" name="position" class="form-control" id="position" placeholder="Position">
           </div>
           <div class="form-group">
-            <label for="sart_date">Start Date</label>
-            <input type="text" name="sart_date" class="form-control" id="sart_date">
+            <label for="start_date">Start Date</label>
+            <input type="text" name="start_date" class="form-control" id="start_date">
           </div>
           <div class="form-group">
             <label for="salary">Salary</label>
@@ -72,7 +72,49 @@
   </div>
 </div>
 
-<!-- Small modal -->
+<!-- Create New Row Modal -->
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="modalCreate" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Create New Row</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{{ route('create.row') }}"  id="formEditRow">
+        	@csrf
+
+					<div id="alertNotification"></div>
+          <div class="form-group">
+            <label for="name1">Name</label>
+            <input type="text" name="name" class="form-control" id="name1" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label for="position1">Position</label>
+            <input type="text" name="position" class="form-control" id="position1" placeholder="Position">
+          </div>
+          <div class="form-group">
+            <label for="start_date1">Start Date</label>
+            <input type="text" name="start_date" class="form-control" id="start_date1">
+          </div>
+          <div class="form-group">
+            <label for="salary1">Salary</label>
+            <input type="number" name="salary" step="1" class="form-control" id="salary1" placeholder="Salary">
+          </div>
+          <div class="form-group">
+            <label for="manger_id1">Manager Id</label>
+            <input type="number" name="manger_id" step="1" class="form-control" id="manger_id1" placeholder="Manager Id">
+          </div>
+          <button type="submit" id="createRow" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Row Modal -->
 <div class="modal fade bd-example-modal-sm" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
@@ -113,7 +155,7 @@
 
 				$('#name').val(data.fio);
 				$('#position').val(data.position);
-				$('#sart_date').val(data.employment_date);
+				$('#start_date').val(data.employment_date);
 				$('#salary').val(data.salary);
 				$('#manger_id').val(data.parent_id);
 				$('#person_id').val(data.id);
@@ -178,7 +220,7 @@
 						$("#alertNotificationDelete").html('<div class="alert alert-danger m-t-15">'+msg+'</div>');
 					}
 				});
-				
+
 			});
 
 			$('#editRow').click( function(e) {
