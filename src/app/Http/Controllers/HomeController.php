@@ -35,14 +35,14 @@ class HomeController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
+	public function createDatatable()
 	{
 		return Datatables::of(Staff::query())->make(true);
 	}
 
 	public function createRow(Request $request)
 	{
-		$validator = Validator::make($request->all(), [
+		$request->validate([
 			'name'=> ['required', 'string', 'max:255'],
 			'position'=> ['required', 'string', 'max:255'],
 			'start_date' => ['required', 'string', 'max:255'],
@@ -50,11 +50,6 @@ class HomeController extends Controller
 			'manger_id' => ['numeric', 'nullable', 'min:1'],
 		]);
 
-		if ($validator->fails()) {
-			return response()->json([
-				'errors' => [$validator->errors()->all()],
-			]);
-		}
 		$node = Staff::create([
 			'fio' => $request->get('name'),
 			'position' => $request->get('position'),
@@ -65,16 +60,13 @@ class HomeController extends Controller
 		$parent_node = Staff::where('id', '=', $request->get('manger_id'))->first();
 		$node->makeChildOf($parent_node);
 
-		return response()->json([
-			'success' => 'The row was successfully updated!',
-			'person_info' => $node
-		]);
+		return back();
 	}
 
 	public function editRow(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
-			'id'=> ['required', 'numeric', 'min:1', 'max:11'],
+			'id'=> ['required', 'numeric', 'min:1'],
 			'name'=> ['required', 'string', 'max:255'],
 			'position'=> ['required', 'string', 'max:255'],
 			'start_date' => ['required', 'string', 'max:255'],
