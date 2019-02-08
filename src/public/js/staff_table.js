@@ -6,6 +6,15 @@ $(document).ready(function() {
 		ajax: '/datatable/init',
 		columns: [
 			{ data: 'id' },
+			{
+				"data": "image_url",
+				"render": function(data, type, row) {
+					if (!data) {
+						return '<img src="https://imgplaceholder.com/70x70/cccccc/757575/glyphicon-user/" />';
+					}
+					return '<img src="http://127.0.0.1:8000/'+data+'" />';
+				}
+			},
 			{ data: 'fio' },
 			{ data: 'position' },
 			{ data: 'employment_date' },
@@ -96,6 +105,33 @@ $(document).ready(function() {
 					});
 					$("#alertNotification").html('<div class="alert alert-danger m-t-15">'+msg+'</div>');
 				}
+		});
+	});
+
+	$('#uploadAvatar').on('change', function(e) {
+		var	img = e.target.files[0];
+		var person_info = table.row('.table-primary').data();
+		var token =  $('input[name="_token"]');
+		var data = new FormData();
+		data.append('image', img);
+		data.append('person_id', person_info.id,);
+		data.append("_token", token.attr('value'));
+		$.ajax({
+			url: '/upload_avatar',
+			data: data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			type: 'POST',
+			success:function(response) {
+				$('tr.table-primary td:eq(6) img').attr("src", 'http://127.0.0.1:8000/'+response.image);
+				$("#alertNotification").html('<div class="alert alert-info d-flex m-t-15">Your avatar was updated.</div>');
+				window.setTimeout(function () {
+					$(".alert").fadeTo(500, 0).slideUp(500, function () {
+						$(this).remove();
+					});
+				}, 2000);
+			}
 		});
 	});
 

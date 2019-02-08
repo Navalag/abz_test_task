@@ -22,3 +22,4 @@ Route::get('/datatable/init', 'HomeController@createDatatable')->name('create');
 Route::post('/create', 'HomeController@createRow')->name('create.row');
 Route::post('/edit', 'HomeController@editRow')->name('edit.row');
 Route::post('/delete', 'HomeController@deleteRow')->name('delete.row');
+Route::post('/upload_avatar', 'HomeController@uploadPhoto')->name('upload.photo');

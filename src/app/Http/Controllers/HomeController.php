@@ -7,6 +7,7 @@ use App\Staff;
 use \Carbon\Carbon;
 use Datatables;
 use Validator;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class HomeController extends Controller
 {
@@ -118,6 +119,29 @@ class HomeController extends Controller
 		return response()->json([
 			'success' => 'The row was successfully deleted!',
 			'person_info' => $employee
+		]);
+	}
+
+	public function uploadPhoto(Request $request)
+	{
+		request()->validate([
+			'person_id'=> ['required', 'numeric', 'min:1'],
+			'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+		]);
+		$imageName = time().'.'.request()->image->getClientOriginalExtension();
+		Image::make(request()->image)->fit(70)->save('avatar_img/'.$imageName);
+
+		$employee = Staff::find($request->get('person_id'));
+		if ($employee->image_url) {
+			$src = $_SERVER["DOCUMENT_ROOT"].DIRECTORY_SEPARATOR.$employee->image_url;
+			unlink($src);
+		}
+		$employee->image_url = 'avatar_img/'.$imageName;
+		$employee->save();
+
+		return response()->json([
+			'success' => 'Your avatar was updated',
+			'image' => $employee->image_url
 		]);
 	}
 }

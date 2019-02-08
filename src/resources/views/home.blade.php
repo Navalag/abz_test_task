@@ -16,6 +16,7 @@
 		<thead>
 			<tr>
 				<th style="width: 15px;">ID</th>
+				<th>img</th>
 				<th style="width: 150px;">Name</th>
 				<th>Position</th>
 				<th style="width: 100px;">Start Date</th>
@@ -26,6 +27,7 @@
 		<tfoot>
 			<tr>
 				<th>ID</th>
+				<th>img</th>
 				<th>Name</th>
 				<th>Position</th>
 				<th>Start Date</th>
@@ -51,6 +53,10 @@
 					@csrf
 
 					<div id="alertNotification"></div>
+					<div class="form-group">
+						<label for="name">Upload Avatar</label>
+						<input type="file" name="image_url" id="uploadAvatar" class="form-control">
+					</div>
 					<div class="form-group">
 						<label for="name">Name</label>
 						<input type="text" name="name" class="form-control" id="name" placeholder="Name">

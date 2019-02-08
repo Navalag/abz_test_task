@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddManagerNameToStaffTable extends Migration
+class AddImageUrlToStaffTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddManagerNameToStaffTable extends Migration
     public function up()
     {
         Schema::table('staff', function (Blueprint $table) {
-            $table->string('manager_name')->after('salary');
+            $table->string('image_url')->nullable()->after('salary');
         });
     }
 
@@ -26,7 +26,7 @@ class AddManagerNameToStaffTable extends Migration
     public function down()
     {
         Schema::table('staff', function (Blueprint $table) {
-            $table->dropColumn('manager_name');
+            $table->dropColumn('image_url');
         });
     }
 }
