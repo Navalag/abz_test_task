@@ -6,27 +6,32 @@ $(function() {
 		}
 	};
 
-	// console.log(employees);
-
 	var oc = $('#chart-container').orgchart({
 		'data': employees,
 		'ajaxURL': ajaxURLs,
 		'nodeContent': 'title',
 		'nodeId': 'id',
-		// 'draggable': true,
-		// 'dropCriteria': function($draggedNode, $dragZone, $dropZone) {
-		// 	if($draggedNode.find('.content').text().indexOf('manager') > -1 && $dropZone.find('.content').text().indexOf('engineer') > -1) {
-		// 		return false;
-		// 	}
-		// 	return true;
-		// }
+		'draggable': true
 	});
 
-	// oc.$chart.on('nodedrop.orgchart', function(event, extraParams) {
-	// 	console.log('draggedNode:' + extraParams.draggedNode.children('.title').text()
-	// 		+ ', dragZone:' + extraParams.dragZone.children('.title').text()
-	// 		+ ', dropZone:' + extraParams.dropZone.children('.title').text()
-	// 	);
-	// });
+	oc.$chart.on('nodedrop.orgchart', function(event, extraParams) {
+		var draggedNodeId = extraParams.draggedNode.children()['0'].offsetParent.id;
+		var dropZoneNodeId = extraParams.dropZone.children()['0'].offsetParent.id;
+		var token =  $('meta[name="csrf-token"]').attr("content");
+		var data = {
+			'draggedNodeId': draggedNodeId,
+			'dropZoneNodeId': dropZoneNodeId,
+			'_token': token
+		}
+		$.post('/orgchart/drag_n_drop', data, function(response) {
+			console.log(response);
+			if (response.success) {
+				//
+			}
+			else {
+				//
+			}
+		});
+	});
 
 });

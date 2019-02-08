@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Staff;
+use Validator;
 
 class OrgChartController extends Controller
 {
@@ -44,6 +45,27 @@ class OrgChartController extends Controller
 		$tree = $this->buildTree($jsonEmployees, $node->parent_id);
 
 		return response()->json(['children' => $tree[0]['children']]);
+	}
+
+	public function dragAndDrop(Request $request)
+	{
+		$validator = Validator::make($request->all(), [
+			'draggedNodeId'=> ['required', 'numeric', 'min:1'],
+			'dropZoneNodeId'=> ['required', 'numeric', 'min:1'],
+		]);
+		if ($validator->fails()) {
+			return response()->json([
+				'errors' => [$validator->errors()->all()],
+			]);
+		}
+
+		$node = Staff::where('id', '=', $request->get('draggedNodeId'))->first();
+		$parent_node = Staff::where('id', '=', $request->get('dropZoneNodeId'))->first();
+		$node->makeChildOf($parent_node);
+
+		return response()->json([
+			'success' => ':)'
+		]);
 	}
 
 	private function buildTree(array $elements, $parentId = 0)

@@ -10,7 +10,7 @@ $(document).ready(function() {
 				"data": "image_url",
 				"render": function(data, type, row) {
 					if (!data) {
-						return '<img src="https://imgplaceholder.com/70x70/cccccc/757575/glyphicon-user/" />';
+						return '<img src="https://imgplaceholder.com/70x70/transparent/ababab/glyphicon-user/" />';
 					}
 					return '<img src="http://127.0.0.1:8000/'+data+'" />';
 				}
