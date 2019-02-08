@@ -23,10 +23,13 @@ $(function() {
 			'dropZoneNodeId': dropZoneNodeId,
 			'_token': token
 		}
+		$('.loader').css('opacity', '1');
+		$('#chart-container').css('opacity', '0');
 		$.post('/orgchart/drag_n_drop', data, function(response) {
 			console.log(response);
 			if (response.success) {
-				//
+				$('.loader').css('opacity', '0');
+				$('#chart-container').css('opacity', '1');
 			}
 			else {
 				//

@@ -22,14 +22,18 @@
 
 	<!-- DataTables -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/datatables.min.css"/>
-	<!-- <style type="text/css">
-		td.highlight {
-		  background-color: whitesmoke !important;
+	<style type="text/css">
+		.loader {
+			opacity: 0;
+			position: absolute;
+			text-align: center;
+			height: 100vh;
+			width: 100%;
 		}
-		tr.highlight {
-		  background-color: whitesmoke !important;
+		#chart-container {
+			opacity: 1;
 		}
-	</style> -->
+	</style>
 
 	<!-- Org chat styles -->
 	<link rel="stylesheet" href="{{ asset('vendor/org_chart/css/font-awesome.min.css') }}">
