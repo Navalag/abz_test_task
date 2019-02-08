@@ -79,6 +79,7 @@ $(document).ready(function() {
 					$('tr.table-primary td:eq(2)').html(data.person_info.position);
 					$('tr.table-primary td:eq(3)').html(data.person_info.employment_date);
 					$('tr.table-primary td:eq(4)').html(data.person_info.salary);
+					$('tr.table-primary td:eq(5)').html(data.person_info.parent_id);
 					$("#alertNotification").html('<div class="alert alert-info">'+data.success+'</div>');
 					window.setTimeout(function () {
 						$(".alert").fadeTo(500, 0).slideUp(500, function () {

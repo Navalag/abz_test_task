@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Staff;
 use \Carbon\Carbon;
-use \Datatables;
+use Datatables;
 use Validator;
 
 class HomeController extends Controller
@@ -84,8 +84,16 @@ class HomeController extends Controller
 		$employee->position = $request->get('position');
 		$employee->employment_date = $request->get('start_date');
 		$employee->salary = $request->get('salary');
-		// $employee->parent_id = $request->get('manger_id');
 		$employee->save();
+		if ($employee->isRoot()) {
+			return response()->json([
+				'success' => 'The row was successfully updated! Root node cannot be reassigned.',
+				'person_info' => $employee
+			]);
+		}
+		$employee->parent_id = $request->get('manger_id'); // set parent_id after save() to update value on front-end
+		$parent_node = Staff::where('id', '=', $request->get('manger_id'))->first();
+		$employee->makeChildOf($parent_node);
 
 		return response()->json([
 			'success' => 'The row was successfully updated!',
