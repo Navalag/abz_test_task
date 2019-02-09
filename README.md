@@ -30,7 +30,7 @@ git clone https://github.com/Navalag/abz_test_task.git
 
 2. Go to /src directory
 ```
-cd /abz_test_task(or your folder)/src
+cd abz_test_task(or your folder)/src
 ```
 
 3. Install composer
@@ -38,9 +38,13 @@ cd /abz_test_task(or your folder)/src
 composer install
 ```
 
-4. Add .env with your database and other configurations
+4. Add .env with your database and other configurations.
+In .env.example you will find sqlite connection. This is the simpliest way for fast start.
+To run this way just create database/database.sqlite file.
 ```
 mv .env.example .env
+php artisan key:generate
+touch database/database.sqlite (only if you want to use sqlite connection)
 ```
 
 5. Run migrations and seeder
