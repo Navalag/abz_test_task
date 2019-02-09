@@ -47,7 +47,8 @@ php artisan key:generate
 touch database/database.sqlite (only if you want to use sqlite connection)
 ```
 
-5. Run migrations and seeder
+5. Run migrations and seeder.
+Seeding can take some time because of large amount of test data. To make it faster just go to database/seeds/StaffTableSeeder.php and comment few levels of ```for``` loop.
 ```
 php artisan migrate
 php artisan db:seed
