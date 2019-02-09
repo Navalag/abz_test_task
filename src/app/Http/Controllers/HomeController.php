@@ -55,7 +55,6 @@ class HomeController extends Controller
 			'fio' => $request->get('name'),
 			'position' => $request->get('position'),
 			'employment_date' => date("Y-m-d H:i:s",rand(1262055681,time())),
-			'manager_name' => 'test',
 			'salary' => $request->get('salary')
 		]);
 		$parent_node = Staff::where('id', '=', $request->get('manger_id'))->first();

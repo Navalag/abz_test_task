@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+	/*
+	** init DataTable plugin
+	** online docs: https://datatables.net/
+	*/
 	var table = $('#example').DataTable({
 		processing: true,
 		serverSide: true,
@@ -23,6 +27,9 @@ $(document).ready(function() {
 		]
 	});
 
+	/*
+	** listen click on row event
+	*/
 	$('#example tbody').on('click', 'tr', function () {
 		var data = table.row( this ).data();
 		$('#name').val(data.fio);
@@ -47,6 +54,9 @@ $(document).ready(function() {
 		}
 	});
 
+	/*
+	** remove Staff table row
+	*/
 	$('#deleteRow').click( function () {
 		var person_info = table.row('.table-primary').data();
 		var token =  $('input[name="_token"]');
@@ -54,8 +64,7 @@ $(document).ready(function() {
 			'person_id': person_info.id,
 			'_token': token.attr('value')
 		}
-		$.post('/delete', data, function(response) {
-			console.log(response);
+		$.post('/datatable/delete', data, function(response) {
 			if (response.success) {
 				$("#alertNotificationDelete").html('<div class="alert alert-info">'+response.success+'</div>');
 				window.setTimeout(function () {
@@ -70,7 +79,6 @@ $(document).ready(function() {
 			}
 			else {
 				var msg = '';
-				console.log(data.errors);
 				$.each(data.errors[0], function(index, item) {
 					msg += '<p class="mr-auto overflow-ellipsis no-padding" id="alerText">'+item+'</p>'
 				});
@@ -79,10 +87,12 @@ $(document).ready(function() {
 		});
 	});
 
+	/*
+	** edit Staff table row
+	*/
 	$('#editRow').click( function(e) {
 		e.preventDefault();
-		$.post('/edit', $('#formEditRow').serialize(), function(data) {
-				console.log(data);
+		$.post('/datatable/edit', $('#formEditRow').serialize(), function(data) {
 				if (data.success) {
 					$('tr.table-primary td:eq(2)').html(data.person_info.fio);
 					$('tr.table-primary td:eq(3)').html(data.person_info.position);
@@ -99,7 +109,6 @@ $(document).ready(function() {
 				}
 				else {
 					var msg = '';
-					console.log(data.errors);
 					$.each(data.errors[0], function(index, item) {
 						msg += '<p class="mr-auto overflow-ellipsis no-padding" id="alerText">'+item+'</p>'
 					});
@@ -108,6 +117,9 @@ $(document).ready(function() {
 		});
 	});
 
+	/*
+	** upload img to server
+	*/
 	$('#uploadAvatar').on('change', function(e) {
 		var	img = e.target.files[0];
 		var person_info = table.row('.table-primary').data();
@@ -117,7 +129,7 @@ $(document).ready(function() {
 		data.append('person_id', person_info.id,);
 		data.append("_token", token.attr('value'));
 		$.ajax({
-			url: '/upload_avatar',
+			url: '/datatable/upload_avatar',
 			data: data,
 			cache: false,
 			contentType: false,

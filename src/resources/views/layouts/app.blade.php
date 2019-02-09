@@ -9,9 +9,6 @@
 
 	<title>{{ config('app.name', 'abz.test') }}</title>
 
-	<!-- Scripts -->
-	<!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
-
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -20,7 +17,7 @@
 	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-	<!-- DataTables -->
+	<!-- DataTables styles -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/datatables.min.css"/>
 	<style type="text/css">
 		.loader {
@@ -33,8 +30,8 @@
 
 	<!-- Org chat styles -->
 	<link rel="stylesheet" href="{{ asset('vendor/org_chart/css/font-awesome.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('vendor/org_chart/css/jquery.orgchart.css') }}">
-  <link rel="stylesheet" href="{{ asset('vendor/org_chart/css/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('vendor/org_chart/css/jquery.orgchart.css') }}">
+	<link rel="stylesheet" href="{{ asset('vendor/org_chart/css/style.css') }}">
 
 </head>
 <body>
@@ -74,7 +71,7 @@
 
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item" href="{{ route('home') }}">
-										{{ __('Home Page') }}
+										{{ __('Staff Table') }}
 									</a>
 									<a class="dropdown-item" href="{{ route('logout') }}"
 									   onclick="event.preventDefault();
