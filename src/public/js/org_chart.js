@@ -32,7 +32,7 @@ $(function() {
 				$('#chart-container').css('opacity', '1');
 			}
 			else {
-				//
+				location.reload();
 			}
 		});
 	});

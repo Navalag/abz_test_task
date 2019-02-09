@@ -26,12 +26,8 @@
 		.loader {
 			opacity: 0;
 			position: absolute;
-			text-align: center;
 			height: 100vh;
 			width: 100%;
-		}
-		#chart-container {
-			opacity: 1;
 		}
 	</style>
 

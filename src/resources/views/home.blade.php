@@ -15,13 +15,13 @@
 	<table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
 		<thead>
 			<tr>
-				<th style="width: 15px;">ID</th>
+				<th>ID</th>
 				<th>img</th>
-				<th style="width: 150px;">Name</th>
+				<th>Name</th>
 				<th>Position</th>
-				<th style="width: 100px;">Start Date</th>
-				<th style="width: 100px;">Salary</th>
-				<th style="width: 15px;">Manager Id</th>
+				<th>Start Date</th>
+				<th>Salary</th>
+				<th>Manager Id</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -133,6 +133,7 @@
 		<div class="modal-content">
 			<div class="modal-body">
 				<div id="alertNotificationDelete"></div>
+				<p class="mb-3">Caution! If you delete manager all employees behind him will also be deleted!</p>
 				<p>Are you sure you want to delete this row?</p>
 				<button type="button" id="deleteRow" class="btn btn-danger btn-block">Yes</button>
 				<button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Cancel</button>

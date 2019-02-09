@@ -84,11 +84,11 @@ $(document).ready(function() {
 		$.post('/edit', $('#formEditRow').serialize(), function(data) {
 				console.log(data);
 				if (data.success) {
-					$('tr.table-primary td:eq(1)').html(data.person_info.fio);
-					$('tr.table-primary td:eq(2)').html(data.person_info.position);
-					$('tr.table-primary td:eq(3)').html(data.person_info.employment_date);
-					$('tr.table-primary td:eq(4)').html(data.person_info.salary);
-					$('tr.table-primary td:eq(5)').html(data.person_info.parent_id);
+					$('tr.table-primary td:eq(2)').html(data.person_info.fio);
+					$('tr.table-primary td:eq(3)').html(data.person_info.position);
+					$('tr.table-primary td:eq(4)').html(data.person_info.employment_date);
+					$('tr.table-primary td:eq(5)').html(data.person_info.salary);
+					$('tr.table-primary td:eq(6)').html(data.person_info.parent_id);
 					$("#alertNotification").html('<div class="alert alert-info">'+data.success+'</div>');
 					window.setTimeout(function () {
 						$(".alert").fadeTo(500, 0).slideUp(500, function () {
@@ -124,7 +124,7 @@ $(document).ready(function() {
 			processData: false,
 			type: 'POST',
 			success:function(response) {
-				$('tr.table-primary td:eq(6) img').attr("src", 'http://127.0.0.1:8000/'+response.image);
+				$('tr.table-primary td:eq(1) img').attr("src", 'http://127.0.0.1:8000/'+response.image);
 				$("#alertNotification").html('<div class="alert alert-info d-flex m-t-15">Your avatar was updated.</div>');
 				window.setTimeout(function () {
 					$(".alert").fadeTo(500, 0).slideUp(500, function () {
