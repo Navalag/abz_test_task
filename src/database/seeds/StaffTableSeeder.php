@@ -36,20 +36,6 @@ class StaffTableSeeder extends Seeder
 		Staff::buildTree($staff); // => true
 	}
 
-	private function findManagerName($staff, $parent_id)
-	{
-		if ($parent_id == null){
-			return '';
-		}
-		foreach ($staff as $value) {
-			if ($value->id == $parent_id) {
-				return $value->fio;
-			}
-		}
-
-		return '';
-	}
-
 	private function getDummyInfo()
 	{
 		$faker = Faker\Factory::create();

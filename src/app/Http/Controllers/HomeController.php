@@ -58,7 +58,10 @@ class HomeController extends Controller
 			'salary' => $request->get('salary')
 		]);
 		$parent_node = Staff::where('id', '=', $request->get('manger_id'))->first();
-		$node->makeChildOf($parent_node);
+		if ($parent_node) {
+			$node->makeChildOf($parent_node);
+		}
+		$parent_node = Staff::where('id', '=', $request->get('manger_id'))->first();
 
 		return back();
 	}

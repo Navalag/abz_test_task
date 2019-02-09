@@ -13,14 +13,16 @@ class OrgChartController extends Controller
 		$node = Staff::root();
 		$jsonEmployees = [];
 
-		foreach($node->descendantsAndSelf()->limitDepth(2)->get() as $value) {
-			$jsonEmployees[] = [
-				'id' => $value->id,
-				'name' => $value->fio,
-				'title' => $value->position,
-				'parent_id' => $value->parent_id,
-				'relationship' => $this->getNodeRelationship($value)
-			];
+		if ($node) {
+			foreach($node->descendantsAndSelf()->limitDepth(2)->get() as $value) {
+				$jsonEmployees[] = [
+					'id' => $value->id,
+					'name' => $value->fio,
+					'title' => $value->position,
+					'parent_id' => $value->parent_id,
+					'relationship' => $this->getNodeRelationship($value)
+				];
+			}
 		}
 		$tree = $this->buildTree($jsonEmployees);
 
